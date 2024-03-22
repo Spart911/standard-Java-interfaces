@@ -11,9 +11,16 @@ class StudentStream:
     def __iter__(self):
         return iter(self.student_groups)
 
+    def __str__(self):
+            students_str = ', '.join(str(student) for student in self.group)
+            return f"StudentGroup ID: {self.idGroup}, Number of Students: {len(self.group)}, Students: [{students_str}]"
+
 class StudentGroup(StudentGroup):
     def __lt__(self, other):
-        return len(self.group) < len(other.group)
+        if len(self.group) != len(other.group):
+            return len(self.group) < len(other.group)
+        else:
+            return self.idGroup < other.idGroup
 
     def __gt__(self, other):
         return len(self.group) > len(other.group)
@@ -24,13 +31,8 @@ class StudentGroup(StudentGroup):
 stream = StudentStream(1)
 stream.add_group(group)
 
-for group in stream:
-    print(group)
-    for student in group:
-        print(student)
-
 sorted_groups = sorted(stream.student_groups)
 for group in sorted_groups:
     print(group)
-    for student in group:
-        print(student)
+
+print(stream)
